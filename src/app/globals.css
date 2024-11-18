@@ -1,0 +1,43 @@
+:root {
+  --canvas: #f2f6f5;
+  --surface: #ffffff;
+  --ink: #14262b;
+  --muted: #5c7075;
+  --line: #d9e3e0;
+  --brand: #0f766e;
+  --brand-strong: #0b5a54;
+  --brand-soft: #e2f0ed;
+  --warn: #a95d0a;
+  --warn-soft: #fdf0dd;
+  --danger: #b42318;
+  --danger-soft: #fde8e6;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--canvas);
+  color: var(--ink);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+}
+
+.table-row {
+  border-top: 1px solid var(--line);
+}
+
+.table-row:hover {
+  background: #f8fbfa;
+}
