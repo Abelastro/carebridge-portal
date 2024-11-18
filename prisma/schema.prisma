@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CLINICIAN
+  ADMIN
+  AUDITOR
+}
+
+enum PatientStatus {
+  ACTIVE
+  DISCHARGED
+  PENDING_REVIEW
+}
+
+enum AuditOutcome {
+  SUCCESS
+  DENIED
+  ERROR
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         Role     @default(CLINICIAN)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  sessions       Session[]
+  auditEvents    AuditEvent[] @relation("ActorAuditEvents")
+  primaryPatients Patient[]   @relation("PrimaryClinician")
+  encounters     Encounter[]  @relation("EncounterClinician")
+}
+
+model Session {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique
+  userAgent String?
+  ipAddress String?
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, revokedAt])
+  @@index([expiresAt])
+}
+
+model Patient {
+  id                 String        @id @default(cuid())
+  mrn                String        @unique
+  firstName          String
+  lastName           String
+  dateOfBirth        DateTime
+  status             PatientStatus @default(ACTIVE)
+  primaryClinicianId String?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  primaryClinician User?       @relation("PrimaryClinician", fields: [primaryClinicianId], references: [id])
+  encounters       Encounter[]
+
+  @@index([lastName, firstName])
+  @@index([status])
+}
+
+model Encounter {
+  id            String   @id @default(cuid())
+  patientId     String
+  clinicianId   String
+  occurredAt    DateTime
+  note          String   @db.Text
+  summary       String?  @db.Text
+  summaryModel  String?
+  summarizedAt  DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  patient   Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  clinician User    @relation("EncounterClinician", fields: [clinicianId], references: [id])
+
+  @@index([patientId, occurredAt])
+  @@index([clinicianId])
+}
+
+model AuditEvent {
+  id           String       @id @default(cuid())
+  actorId      String?
+  action       String
+  resourceType String
+  resourceId   String?
+  outcome      AuditOutcome
+  ipAddress    String?
+  userAgent    String?
+  metadata     Json?
+  prevHash     String?
+  eventHash    String
+  createdAt    DateTime     @default(now())
+
+  actor User? @relation("ActorAuditEvents", fields: [actorId], references: [id])
+
+  @@index([createdAt])
+  @@index([actorId, createdAt])
+  @@index([resourceType, resourceId])
+  @@index([action, createdAt])
+}
