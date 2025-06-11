@@ -1,6 +1,6 @@
 {
   "name": "carebridge-portal",
-  "version": "1.0.2",
+  "version": "1.2.0",
   "private": true,
   "description": "Clinician operations console for care coordination teams",
   "engines": {
@@ -21,31 +21,31 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@aws-sdk/client-bedrock-runtime": "^3.700.0",
-    "@aws-sdk/client-s3": "^3.700.0",
-    "@aws-sdk/s3-request-presigner": "^3.700.0",
-    "@prisma/client": "5.22.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.750.0",
+    "@aws-sdk/client-s3": "^3.750.0",
+    "@aws-sdk/s3-request-presigner": "^3.750.0",
+    "@prisma/client": "6.5.0",
     "bcryptjs": "2.4.3",
-    "jose": "5.9.6",
-    "next": "14.2.23",
+    "jose": "5.10.0",
+    "next": "15.1.8",
     "pino": "9.6.0",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
     "zod": "3.24.1"
   },
   "devDependencies": {
-    "@types/node": "22.10.7",
-    "@types/react": "18.3.18",
-    "@types/react-dom": "18.3.5",
-    "autoprefixer": "10.4.20",
-    "eslint": "8.57.1",
-    "eslint-config-next": "14.2.23",
-    "postcss": "8.5.1",
-    "prisma": "5.22.0",
+    "@eslint/eslintrc": "3.2.0",
+    "@tailwindcss/postcss": "4.0.14",
+    "@types/node": "22.13.1",
+    "@types/react": "19.0.8",
+    "@types/react-dom": "19.0.3",
+    "eslint": "9.20.0",
+    "eslint-config-next": "15.1.8",
     "prettier": "3.4.2",
-    "tailwindcss": "3.4.17",
+    "prisma": "6.5.0",
+    "tailwindcss": "4.0.14",
     "tsx": "4.19.2",
     "typescript": "5.7.3",
-    "vitest": "2.1.8"
+    "vitest": "3.0.5"
   }
 }
