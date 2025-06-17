@@ -1,41 +1,47 @@
-:root {
-  --canvas: #f2f6f5;
-  --surface: #ffffff;
-  --ink: #14262b;
-  --muted: #5c7075;
-  --line: #d9e3e0;
-  --brand: #0f766e;
-  --brand-strong: #0b5a54;
-  --brand-soft: #e2f0ed;
-  --warn: #a95d0a;
-  --warn-soft: #fdf0dd;
-  --danger: #b42318;
-  --danger-soft: #fde8e6;
-}
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme inline {
+  --color-canvas: #f2f6f5;
+  --color-surface: #ffffff;
+  --color-ink: #14262b;
+  --color-muted: #5c7075;
+  --color-line: #d9e3e0;
+  --color-brand: #0f766e;
+  --color-brand-strong: #0b5a54;
+  --color-brand-soft: #e2f0ed;
+  --color-warn: #a95d0a;
+  --color-warn-soft: #fdf0dd;
+  --color-danger: #b42318;
+  --color-danger-soft: #fde8e6;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", Menlo, Consolas, monospace;
+}
 
 html {
   color-scheme: light;
 }
 
 body {
-  background-color: var(--canvas);
-  color: var(--ink);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
+::selection {
+  background: var(--color-brand-soft);
+  color: var(--color-brand-strong);
+}
+
 .panel {
-  background: var(--surface);
-  border: 1px solid var(--line);
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
   border-radius: 0.75rem;
 }
 
 .table-row {
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--color-line);
 }
 
 .table-row:hover {
