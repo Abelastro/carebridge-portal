@@ -1,32 +1,41 @@
-import "server-only";
-
+import type { AuditOutcome, Prisma } from "@prisma/client";
 import { db } from "@/lib/db";
-import { computeEventHash } from "./hash";
+import { computeEventHash, verifyChain } from "./hash";
 
-type AuditInput = {
+export type AuditEventInput = {
   actorId?: string | null;
   action: string;
   resourceType: string;
   resourceId?: string | null;
-  outcome: "SUCCESS" | "DENIED" | "ERROR";
+  outcome: AuditOutcome;
   ipAddress?: string | null;
   userAgent?: string | null;
-  metadata?: Record<string, unknown> | null;
+  metadata?: Record<string, unknown>;
 };
 
-export async function recordAuditEvent(input: AuditInput): Promise<void> {
-  await db().$transaction(async (tx) => {
+export async function recordAuditEvent(input: AuditEventInput) {
+  return db().$transaction(async (tx) => {
     const previous = await tx.auditEvent.findFirst({
-      orderBy: { createdAt: "desc" },
+      orderBy: [{ createdAt: "desc" }, { id: "desc" }],
       select: { eventHash: true },
     });
+
     const createdAt = new Date();
+    const prevHash = previous?.eventHash ?? null;
     const eventHash = computeEventHash({
-      ...input,
-      createdAt,
-      prevHash: previous?.eventHash ?? null,
+      actorId: input.actorId ?? null,
+      action: input.action,
+      resourceType: input.resourceType,
+      resourceId: input.resourceId ?? null,
+      outcome: input.outcome,
+      ipAddress: input.ipAddress ?? null,
+      userAgent: input.userAgent ?? null,
+      metadata: input.metadata ?? null,
+      createdAt: createdAt.toISOString(),
+      prevHash,
     });
-    await tx.auditEvent.create({
+
+    return tx.auditEvent.create({
       data: {
         actorId: input.actorId ?? null,
         action: input.action,
@@ -35,11 +44,38 @@ export async function recordAuditEvent(input: AuditInput): Promise<void> {
         outcome: input.outcome,
         ipAddress: input.ipAddress ?? null,
         userAgent: input.userAgent ?? null,
-        metadata: input.metadata ?? undefined,
-        prevHash: previous?.eventHash ?? null,
+        metadata: (input.metadata ?? undefined) as Prisma.InputJsonValue | undefined,
+        prevHash,
         eventHash,
         createdAt,
       },
     });
   });
+}
+
+export async function listAuditEvents(limit = 100) {
+  return db().auditEvent.findMany({
+    orderBy: { createdAt: "desc" },
+    take: limit,
+    include: {
+      actor: { select: { name: true, email: true, role: true } },
+    },
+  });
+}
+
+export async function verifyAuditChain(limit = 500) {
+  const rows = await db().auditEvent.findMany({
+    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+    take: limit,
+    select: { id: true, prevHash: true, eventHash: true, createdAt: true },
+  });
+
+  const ordered = [...rows].reverse();
+  const result = verifyChain(ordered);
+
+  return {
+    checked: ordered.length,
+    latestAt: rows[0]?.createdAt ?? null,
+    ...result,
+  };
 }
