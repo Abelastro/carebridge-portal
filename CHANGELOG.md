@@ -3,6 +3,18 @@
 All notable changes to CareBridge Portal are recorded here. The project follows semantic
 versioning for internal releases.
 
+## [1.3.0] - 2025-09-22
+
+### Added
+
+- User administration for role changes and account state.
+- Role labels and permission helpers shared by pages and server actions.
+- Initial Vitest setup for permission and hashing helpers.
+
+### Changed
+
+- Prisma indexes and relations reviewed for the access patterns used by the portal.
+
 ## [1.2.0] - 2025-06-17
 
 ### Added
