@@ -3,6 +3,19 @@
 All notable changes to CareBridge Portal are recorded here. The project follows semantic
 versioning for internal releases.
 
+## [1.4.0] - 2025-12-09
+
+### Added
+
+- Login rate limiting per client address.
+- Session revocation on sign-out and a session list ready for a future device-management
+  screen.
+- Security headers and disabled framework identification in Next.js configuration.
+
+### Fixed
+
+- Redirect target after sign-in is validated to remain on the same origin.
+
 ## [1.3.0] - 2025-09-22
 
 ### Added

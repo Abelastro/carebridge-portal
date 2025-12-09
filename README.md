@@ -176,7 +176,7 @@ their own container build, networking, secret management, backup policy, and log
 Please report vulnerabilities according to [SECURITY.md](SECURITY.md). Do not open a public
 issue for a suspected security problem.
 
-## Notes
+## Recent changes
 
-The App Router migration is complete. Server actions own mutations, and read paths go
-through the service layer in `src/lib/services`.
+Patient search and encounter timelines are in place. The dashboard includes the first
+operational counters, and every patient status change now writes an audit event.
