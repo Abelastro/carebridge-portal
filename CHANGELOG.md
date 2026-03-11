@@ -3,6 +3,20 @@
 All notable changes to CareBridge Portal are recorded here. The project follows semantic
 versioning for internal releases.
 
+## [1.5.0] - 2026-03-11
+
+### Added
+
+- Patient search across name and record number, with status filtering.
+- Encounter timeline on the patient detail page.
+- Dashboard counters for active patients, pending review, encounters today, pending
+  summaries, and audit events today.
+
+### Changed
+
+- Patient status updates now require the `patient:write` permission and write an audit
+  event with the previous and next status.
+
 ## [1.4.0] - 2025-12-09
 
 ### Added
