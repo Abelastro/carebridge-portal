@@ -3,6 +3,21 @@
 All notable changes to CareBridge Portal are recorded here. The project follows semantic
 versioning for internal releases.
 
+## [1.6.0] - 2026-06-03
+
+### Added
+
+- Amazon Bedrock Converse integration behind a provider interface.
+- Summary validation for length, grounding, assistant-style disclaimers, and leaked
+  identifiers.
+- Prompt-injection inspection with severity levels and an audit entry when a note is
+  blocked.
+
+### Changed
+
+- Development defaults to the deterministic mock provider.
+- Summary generation records model identifier, duration, and source-note digest.
+
 ## [1.5.0] - 2026-03-11
 
 ### Added
