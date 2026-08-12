@@ -3,6 +3,20 @@
 All notable changes to CareBridge Portal are recorded here. The project follows semantic
 versioning for internal releases.
 
+## [1.7.0] - 2026-08-19
+
+### Added
+
+- Hash-chained audit events for sign-in, sign-out, patient status changes, role changes,
+  account activation changes, and summary generation.
+- Admin audit view with actor, resource, outcome, request address, and hash prefix.
+- Account activation and deactivation from the user administration page.
+
+### Changed
+
+- Server actions re-check permissions and reject self-demotion or self-deactivation.
+- Seed script writes an initial audit chain so the verification screen has data locally.
+
 ## [1.6.0] - 2026-06-03
 
 ### Added
