@@ -3,6 +3,26 @@
 All notable changes to CareBridge Portal are recorded here. The project follows semantic
 versioning for internal releases.
 
+## [1.8.0] - 2026-10-28
+
+### Added
+
+- Audit chain verification on the admin audit page, including the first broken position.
+- Health endpoint reports database latency and returns a degraded response when PostgreSQL
+  is unavailable.
+- Structured redaction rules for cookies and authorization headers in application logs.
+
+### Changed
+
+- Patient detail page only renders the summary control for clinicians who may summarize
+  encounters.
+- Navigation is derived from the permission matrix instead of staff-role checks.
+
+### Fixed
+
+- Mock summarizer now reads the encounter note rather than the wrapper prompt.
+- Session lookup rejects revoked and expired rows before returning a user.
+
 ## [1.7.0] - 2026-08-19
 
 ### Added

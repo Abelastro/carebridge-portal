@@ -176,8 +176,3 @@ their own container build, networking, secret management, backup policy, and log
 Please report vulnerabilities according to [SECURITY.md](SECURITY.md). Do not open a public
 issue for a suspected security problem.
 
-## LLM summaries
-
-Encounter summaries are generated through a provider boundary. Local development uses the
-deterministic mock provider; staging and production use Amazon Bedrock. Notes are inspected
-before they reach the model and summaries are validated before they are stored.
